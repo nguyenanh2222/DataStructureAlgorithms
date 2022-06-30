@@ -67,6 +67,7 @@ class LinkedList:
     def removeNodeAtHead(self, key):
         # loai bo node dau tien
         temp = self.head
+
         if (temp is not None):
             if (temp.data == key):
                 self.head = temp.next
