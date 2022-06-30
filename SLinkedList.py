@@ -30,6 +30,7 @@ if __name__=='__main__':
             self.head = new_node
             return
         last = self.head
+
         while (last.next):
             last = last.next
         last.next = new_node
