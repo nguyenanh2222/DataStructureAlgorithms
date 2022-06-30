@@ -1,0 +1,4 @@
+#InterchangSort
+#BubbleSort
+#InsertSort
+#SelectSort
