@@ -47,49 +47,55 @@ class LinkedList:
         new_node.next = prev_node.next
         prev_node.next = new_node
 
-    def search(self, x):
-        current = self.head
-        while current != None:
-            if current.data == x:
-                return True  # tìm thấy
-            current = current.next
-        return False  # không tìm thấy
+    def liearSearch(self, target: int):
+        current_node = self.head
+        while current_node is not None:
+            if current_node.data == target:
+                print(current_node.data)
+                break
+            if current_node.data != target:
+                current_node = current_node.next
+            if current_node == None:
+                print("Not found")
 
-    # def isEmpty(self):
-    # ...
-    # kiem tra danh sach co rong hay khong
-    # def nodeGetHead(self):
-    # ...
-    # tra ra node dau tien
-    # def getHeadData(self):
-    # ...
-    # lay gia tri node dau tien trong danh sach
-    def removeNodeAtHead(self, key):
-        # loai bo node dau tien
+    def isEmpty(self):
+        # kiem tra danh sach co rong khong
+        if self.head is None:
+            print("Empty")
+
+    def nodeGetHead(self):
+        first_node = self.head
+        while first_node is not None:
+            print("Head is", first_node.data)
+            break
+        if first_node is None:
+            print("Head can not be none")
+
+    def getHeadData(self):
+        # lay gia tri node dau tien trong danh sach
+        first_node = self.head
+        while first_node is not None:
+            print(first_node.data)
+            break
+        if first_node is None:
+            print("Head can not be none")
+
+    def removeNodes(self, x: int):
         temp = self.head
+        while temp.data == x:
+            temp.next = temp.next.next
 
-        if (temp is not None):
-            if (temp.data == key):
-                self.head = temp.next
-                return
-        while (temp is not None):
-            if temp.data == key:
-                break
-            temp = temp.next
-        if (temp == None):
-            return
-        if (temp is not None):
-            if (temp.data == key):
-                self.head = temp.next
-                temp = None
-                return
-        while (temp is not None):
-            if temp.data == key:
-                break
-            prev = temp
-            temp = temp.next
-        if (temp == None):
-            return
+    def appendList(self, l, x: []):
+        fist_node_x = self.head
+        last_node_y = self.head
+        # noi 2 danh sach lien ket
+        last_node_y.next = fist_node_x
+
+    def removeNodeAtHead(self):
+        if self.head is None:
+            print("Head is not none")
+        if self.head is not None:
+            self.head = self.head.next
 
     def removeNodeAtTail(self):
         # loai bo node dau tien co gia tri bang x
@@ -106,11 +112,6 @@ class LinkedList:
 
     def removeNode(self, x: int):
         temp = self.head
-        if (temp is not None):
-            if (temp.data == x):
-                self.head = temp.next
-                temp = None
-                return
         while (temp is not None):
             if temp.data == x:
                 break
@@ -121,26 +122,21 @@ class LinkedList:
         prev.next = temp.next
         temp = None
 
-    # def removeNodes(self, x: int):
-    #     ...
-    # loai bo tat ca cac node co gia tri bang x
-    # def appendList(self, l, x: int):
-    #     ...
-    # noi 2 danh sach lien ket
-
 
 list = LinkedList()
 list.insertNode2Head(1)
+print(list)
+list.insertNode2Head(1)
+list.insertNode2Head(2)
 list.insertNode2Head(2)
 list.insertNode2Head(3)
-list.insertNode2Tail(4)
-list.insertNode2Head(2)
-list.insertNode2Head(2)
-list.insertNode2Head(2)
-# list.removeNodeAtHead(3)
-# list.search()
-# # search chua ok
-# list.removeNodeAtHead(2)
-# list.removeNodeAtTail()
+list.insertNode2Head(3)
+# list.liearSearch(9)
+# list.removeNodes(3)
+list.removeNodeAtTail()
+list.removeNodeAtHead()
 list.removeNode(2)
+# list.removeNodes(2)
+# list.isEmpty()
+# list.nodeGetHead()
 print(list)
