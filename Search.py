@@ -30,6 +30,7 @@ def binarySearch(arr: [], target: int):
         is_found = arr[mid]
     if is_found != arr[mid]:
         print("Not found")
+
 arr = [1, 2, 3, 4, 4, 5]
 binarySearch(arr, 4)
 #Recuirsive search

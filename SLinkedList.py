@@ -1,4 +1,3 @@
-
 class Node:
     def __init__(self, data: int):
         self.data = data
@@ -58,7 +57,7 @@ class LinkedList:
     def insertAtIndex(self, data, index):
         new_node = Node(data)
         if index < 0 or index >= self.get_length():
-            raise Exception ("invalid input")
+            raise Exception("invalid input")
         if index == 0:
             new_node.next = self.head
             self.head = new_node
@@ -107,6 +106,52 @@ class LinkedList:
                 break
             curr = curr.next
             count += 1
+    #
+    # def removeNodeTarget(self, target: int):
+    #     temp = self.head
+    #     prev = temp.next
+    #     if temp is None:
+    #         print("Head can not none")
+    #     if temp.data == target:
+    #         temp = temp.next
+    #         temp.data = prev.data
+    #         temp.next = temp.next.next
+    #         return
+    #     while temp.next is not None and temp.data != target:
+    #         prev = temp
+    #         temp = temp.next
+    #     if temp.next is None and temp.data != target:
+    #         print("target not exits")
+    #     elif temp.next is None and temp.data == target:
+    #         prev.next = None
+    #     else:
+    #         prev.next = temp.next
+    #     if self.head.next == target:
+    #         self.head.next = self.head.next.next
+        # //// remove mot gia tri target
+
+    def removeNodeTarget(self, target: int):
+        temp = self.head
+        prev = None
+        if temp is None:
+            print("Head can not none")
+        # TH 1 target = head
+        if temp.data == target:
+            self.head = temp.next
+            temp.next = None
+            return self.removeNodeTarget(target)
+        while temp.next is not None:
+            prev = temp
+            temp = temp.next
+            if temp.data == target:
+                # TH TARGET IS NOT TAIL VA HEAD
+                if temp.next:
+                    prev.next = temp.next
+                # TH TARGET IS TAIL
+                else:
+                    prev.next = None
+                # CALL BACK FUNC
+                return self.removeNodeTarget(target)
 
     def appendList(self, l, x: []):
         fist_node_x = self.head
@@ -121,7 +166,6 @@ class LinkedList:
             self.head = self.head.next
 
     def removeNodeAtTail(self):
-        # loai bo node dau tien co gia tri bang x
         if (self.head != None):
             if (self.head.next == None):
                 self.head = None
@@ -133,27 +177,23 @@ class LinkedList:
                 temp.next = None
                 tailNode = None
 
-    def removeNode(self, x: int):
-        temp = self.head
-        while (temp is not None):
-            if temp.data == x:
-                break
-            prev = temp
-            temp = temp.next
-        if (temp == None):
-            return
-        prev.next = temp.next
-        temp = None
-
 
 list = LinkedList()
+list.insertNode2Head(8)
+list.insertNode2Head(8)
 list.insertNode2Head(1)
 list.insertNode2Head(1)
 list.insertNode2Head(2)
 list.insertNode2Head(2)
 list.insertNode2Head(3)
 list.insertNode2Head(3)
-list.insertAtIndex(8, 0)
+list.insertNode2Head(8)
+
+print(list)
+# list.insertAtIndex(8, 0)
+# print(list)
+list.removeNodeTarget(8)
+# list.removeNodeAtHead()
 # list.removeNodeIndex(0)
 # list.liearSearch(9)
 # list.removeNodes(3)
