@@ -1,6 +1,6 @@
+
 class Node:
-    # khoi tao danh sach
-    def __init__(self, data=None):
+    def __init__(self, data: int):
         self.data = data
         self.next = None
 
@@ -14,11 +14,11 @@ class LinkedList:
 
     def __str__(self):
         temp = self.head
-        temp_str = ''
+        temp_str = ""
         while temp:
-            temp_str += f"{temp.data}->"
+            temp_str += f"{temp.data}-->"
             temp = temp.next
-        temp_str += 'None'
+        temp_str += "None"
         return temp_str
 
     def insertNode2Head(self, new_data: int):
@@ -47,16 +47,29 @@ class LinkedList:
         new_node.next = prev_node.next
         prev_node.next = new_node
 
-    def liearSearch(self, target: int):
-        current_node = self.head
-        while current_node is not None:
-            if current_node.data == target:
-                print(current_node.data)
+    def get_length(self):
+        size = 0
+        curr = self.head
+        while curr:
+            size += 1
+            curr = curr.next
+        return size
+
+    def insertAtIndex(self, data, index):
+        new_node = Node(data)
+        if index < 0 or index >= self.get_length():
+            raise Exception ("invalid input")
+        if index == 0:
+            new_node.next = self.head
+            self.head = new_node
+        count = 0
+        curr = self.head
+        while curr is not None:
+            if count == index - 1:
+                new_node = curr.next
                 break
-            if current_node.data != target:
-                current_node = current_node.next
-            if current_node == None:
-                print("Not found")
+            curr = curr.next
+            count += 1
 
     def isEmpty(self):
         # kiem tra danh sach co rong khong
@@ -80,10 +93,20 @@ class LinkedList:
         if first_node is None:
             print("Head can not be none")
 
-    def removeNodes(self, x: int):
-        temp = self.head
-        while temp.data == x:
-            temp.next = temp.next.next
+    def removeNodeIndex(self, index):
+        if index < 0 or index <= self.get_length():
+            print("Invalid input")
+        if index == 0:
+            self.head = self.head.next
+            return
+        count = 0
+        curr = self.head
+        while curr:
+            if count == index - 1:
+                curr.next = curr.next.next
+                break
+            curr = curr.next
+            count += 1
 
     def appendList(self, l, x: []):
         fist_node_x = self.head
@@ -125,17 +148,15 @@ class LinkedList:
 
 list = LinkedList()
 list.insertNode2Head(1)
-print(list)
 list.insertNode2Head(1)
 list.insertNode2Head(2)
 list.insertNode2Head(2)
 list.insertNode2Head(3)
 list.insertNode2Head(3)
+list.insertAtIndex(8, 0)
+# list.removeNodeIndex(0)
 # list.liearSearch(9)
 # list.removeNodes(3)
-list.removeNodeAtTail()
-list.removeNodeAtHead()
-list.removeNode(2)
 # list.removeNodes(2)
 # list.isEmpty()
 # list.nodeGetHead()

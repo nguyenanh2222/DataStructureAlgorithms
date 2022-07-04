@@ -32,9 +32,11 @@ def binarySearch(arr: [], target: int):
         print("Not found")
 arr = [1, 2, 3, 4, 4, 5]
 binarySearch(arr, 4)
-
 #Recuirsive search
 def recuirsiveSearch(arr: [], target: int):
+
+
+
     left = 0
     right = len(arr)
     mid = (left + right) // 2
@@ -44,6 +46,3 @@ def recuirsiveSearch(arr: [], target: int):
         recuirsiveSearch(arr[:mid], target)
     if arr[mid] < target:
         recuirsiveSearch(arr[mid + 1:], target)
-# arr = [1, 2, 2, 4, 5, 6, 7, 8, 9]
-# target = 9
-# recuirsiveSearch(arr, target)
