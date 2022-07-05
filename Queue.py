@@ -29,7 +29,7 @@ class Queue:
         new_node = Node(new_node)
         if self.head is None:
             self.head = new_node
-            return
+            return new_node.data
         last = self.head
         while (last.next):
             last = last.next
@@ -37,41 +37,38 @@ class Queue:
     def deQueue(self):
         # lay mot phan tu ra khoi queue
         if self.head == None:
-            print("Empty")
+            return self.head.data
         else:
-            print(self.head.data)
             self.head.data = self.head.next.data
             self.head = self.head.next
     def front(self):
         # lay gia tri tai phan tu dau tien
         return self.head.data
-
     def rear(self):
         # lay gia tri cuoi trong queue
         while self.head:
             if self.head.next == None:
-                print(self.head.data)
-                break
+                return self.head.data
             else:
                 self.head = self.head.next
 
     def isEmpty(self):
         # kiem tra hang doi rong
-        print(self.head == None)
+        if self.head is None:
+            return True
+        else:
+            return False
 
     def sizeQueue(self):
-        size = None
+        size = 0
         while self.head:
-            if self.head == None:
-                print("Empty")
-            elif self.head != None:
-                size = 0
-                size += 1
-        print(size)
+            size += 1
+            self.head = self.head.next
+        return size
 
     def deleteQueue(self):
         if self.head == None:
-            print("Empty")
+            return
         while self.head:
             self.head = self.head.next
             if self.head == None:
@@ -87,14 +84,21 @@ class Queue:
 if __name__ == '__main__':
     queue = Queue()
     queue.isEmpty()
-    queue.sizeQueue()
-    queue.enQueue(1)
+    _is_empty = queue.isEmpty()
+    print(_is_empty)
+    size = queue.sizeQueue()
+    print(size)
+    # queue.printQueue()
+    add = queue.enQueue(1)
+    print(add)
+    size = queue.sizeQueue()
+    print(size)
     queue.enQueue(2)
     queue.enQueue(3)
     # queue.rear()
-    queue.deQueue()
-    queue.deleteQueue()
-    queue.printQueue()
+    # queue.deQueue()
+    # queue.deleteQueue()
+    # queue.printQueue()
     # queue.front()
     # queue.deQueue()
     # print(queue)

@@ -23,7 +23,7 @@ class Stack:
         return self.size == 0
     def peek(self):
         if self.isEmty():
-            raise Exception (" Peeking from an empty stack")
+            raise Exception ("Peeking from an empty stack")
         return self.head.next.value
     def push(self, value):
         node = Node(value)
@@ -37,6 +37,8 @@ class Stack:
         self.head.next = self.head.next.next
         self.size -= 1
         return remove.value
+
+    # delete, print
 
 
 if __name__ =='__main__':
