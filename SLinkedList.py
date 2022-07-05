@@ -72,7 +72,9 @@ class LinkedList:
 
     def isEmpty(self):
         # kiem tra danh sach co rong khong
-        if self.head is None:
+        if self.head:
+            print("Not Empty")
+        else:
             print("Empty")
 
     def nodeGetHead(self):
@@ -106,29 +108,6 @@ class LinkedList:
                 break
             curr = curr.next
             count += 1
-    #
-    # def removeNodeTarget(self, target: int):
-    #     temp = self.head
-    #     prev = temp.next
-    #     if temp is None:
-    #         print("Head can not none")
-    #     if temp.data == target:
-    #         temp = temp.next
-    #         temp.data = prev.data
-    #         temp.next = temp.next.next
-    #         return
-    #     while temp.next is not None and temp.data != target:
-    #         prev = temp
-    #         temp = temp.next
-    #     if temp.next is None and temp.data != target:
-    #         print("target not exits")
-    #     elif temp.next is None and temp.data == target:
-    #         prev.next = None
-    #     else:
-    #         prev.next = temp.next
-    #     if self.head.next == target:
-    #         self.head.next = self.head.next.next
-        # //// remove mot gia tri target
 
     def removeNodeTarget(self, target: int):
         temp = self.head
@@ -153,11 +132,11 @@ class LinkedList:
                 # CALL BACK FUNC
                 return self.removeNodeTarget(target)
 
-    def appendList(self, l, x: []):
-        fist_node_x = self.head
-        last_node_y = self.head
-        # noi 2 danh sach lien ket
-        last_node_y.next = fist_node_x
+    # def appendList(self, l, x: []):
+    #     fist_node_x = self.head
+    #     last_node_y = self.head
+    #     # noi 2 danh sach lien ket
+    #     last_node_y.next = fist_node_x
 
     def removeNodeAtHead(self):
         if self.head is None:
@@ -177,27 +156,11 @@ class LinkedList:
                 temp.next = None
                 tailNode = None
 
-
-list = LinkedList()
-list.insertNode2Head(8)
-list.insertNode2Head(8)
-list.insertNode2Head(1)
-list.insertNode2Head(1)
-list.insertNode2Head(2)
-list.insertNode2Head(2)
-list.insertNode2Head(3)
-list.insertNode2Head(3)
-list.insertNode2Head(8)
-
-print(list)
-# list.insertAtIndex(8, 0)
-# print(list)
-list.removeNodeTarget(8)
-# list.removeNodeAtHead()
-# list.removeNodeIndex(0)
-# list.liearSearch(9)
-# list.removeNodes(3)
-# list.removeNodes(2)
-# list.isEmpty()
-# list.nodeGetHead()
-print(list)
+if __name__ == '__main__':
+    ll = LinkedList()
+    ll.insertNode2Tail(2)
+    ll.insertAtIndex(1, 0)
+    ll.insertNode2Head(0)
+    ll.removeNodeIndex(1)
+    ll.removeNodeAtTail()
+    print(ll)

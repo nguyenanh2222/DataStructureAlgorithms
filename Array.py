@@ -82,7 +82,7 @@ for i in range(n):
     print(arr[i], end= " ")
 n = deleteElement( arr, n, key)
 print("\n\nArray after deletion")
-for i in  range(n):
+for i in range(n):
     print(arr[i], end= " ")
 # reverse an array or string
 
@@ -97,7 +97,6 @@ reverseListNum(A, 0, 5)
 print("Reversed list is ")
 print(A)
 
-
 def reverseList(A):
     print(A[::-1])
 A = ['a', 'b', 'c']
@@ -111,5 +110,5 @@ def findSingle(ar, n):
     return res
 
 ar = [9, 3, 5, 5, 3 ,8, 8]
-print("elemect occurrring once is", findSingle(ar, len(ar)) )
+print("elemect occurrring once is", findSingle(ar, len(ar)))
 
