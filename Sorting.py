@@ -1,40 +1,58 @@
 import math
 
 
-def bubble_sort(arr):
-    # giam nghich the trong mang
-    n = len(arr)
-    swaped = False
-    for i in range(n - 1):
-        for j in range(n - i - 1):
-            if arr[j] > arr[j + 1]:
-                swaped = True
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-    if not swaped:
-        return
+def inter_change_sort(arr: []):
+    for i in range(-1, len(arr) - 1):
+        i += 1
+        for j in range(i, len(arr) - 1):
+            j += 1
+            if arr[i] >= arr[j]:
+                arr[i], arr[j] = arr[j], arr[i]
     return arr
 
 
-def inter_change_sort(arr):
-    # giam nghich the trong mang
-    # doi cho truc tiep
-    n = len(arr)
-    for i in range(0, n):
-        for j in range(i, n):
-            if arr[i] > arr[j]:
-                arr[j], arr[i] = arr[i], arr[j]
+def bubble_sort_max(arr):
+    for i in range(len(arr)-1, 0, -1):
+        i -= 1
+        for j in range(-1, i):
+            j += 1
+            if arr[j] >= arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+
+def bubble_sort_min(arr):
+    for i in range(len(arr)):
+        i += 1
+        for j in range(i + 1, len(arr) + 1):
+            j -= 1
+            if arr[j - 1] >= arr[j]:
+                arr[j - 1], arr[j] = arr[j], arr[j - 1]
+    return arr
+
+
+def insert_sort(arr: []):
+    i: int
+    j: int
+    for i in range(1, len(arr)):
+        temp = arr[i]
+        j = i - 1
+        while temp < arr[j] and j >= 0:
+            arr[j + 1], arr[j] = arr[j], arr[j + 1]
+            j -= 1
     return arr
 
 
 def select_sort(arr):
-    # xay dung manh moi tu mang ban dau
-    for i in range(1, len(arr)):
-        a = arr[i]
-        j = i - 1
-        while j >= 0 and a < arr[j]:
-            arr[j + 1] = arr[j]
-            j -= 1
-        arr[j + 1] = a
+    i: int
+    j: int
+    k: int
+    for i in range(len(arr) - 1):
+        k = i
+        for j in range(i + 1, len(arr)):
+            if arr[j] <= arr[k]:
+                k = j
+                arr[k], arr[i] = arr[i], arr[k]
     return arr
 
 
@@ -82,6 +100,7 @@ def quick_sort(arr):
             arr[left], arr[right] = arr[left], arr[right]
             left += 1
             right -= 1
+
     return arr
 
 
@@ -112,32 +131,6 @@ def mSort(arr):
         return arr
 
 
-def binary_search(arr, val, start, end):
-    if start == end:
-        if arr[start] > val:
-            return start
-        else:
-            return start + 1
-    if start > end:
-        return start
-
-    mid = math.ceil((start + end) / 2) - 1
-    if arr[mid] < val:
-        return binary_search(arr, val, mid + 1, end)
-    elif arr[mid] > val:
-        return binary_search(arr, val, start, mid - 1)
-    else:
-        return mid
-
-
-def insertion_sort(arr):
-    for i in range(1, len(arr)):
-        val = arr[i]
-        j = binary_search(arr, val, 0, i - 1)
-        arr = arr[:j] + [val] + arr[j:i] + arr[i + 1:]
-    return arr
-
-
 def printList(arr):
     for i in range(len(arr)):
         print(arr[i], end=" ")
@@ -145,12 +138,19 @@ def printList(arr):
 
 
 if __name__ == '__main__':
-    arr = [1, 9, 3, 2, 7, 7, 4, 8, 5]
-    # arr = bubble_sort(arr)
+    # arr = [1, 9, 3, 2, 7, 7, 4, 8, 5]
+    # arr = [1, 2, 3]
+    # arr = [1, 3, 1]
+    arr = [8, 2, 2, 4, 5, 3, 0]
+    arr = [1, 0, 2, 3, 4, 7, 9]
+    arr = [7, 0, 1, 9, 2, 3, 4]
+    # arr = inter_change_sort(arr)
+    # arr = bubble_sort_max(arr)
+    # arr = bubble_sort_min(arr)
     # arr = inter_change_sort(arr)
     # arr = select_sort(arr)
     # arr = quick_sort(arr)
     # arr = mSort(arr)
     # arr = heap_sort(arr)
-    arr = insertion_sort(arr)
-    printList(arr)
+    arr = insert_sort(arr)
+    print(arr)
