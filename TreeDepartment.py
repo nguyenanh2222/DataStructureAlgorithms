@@ -60,8 +60,8 @@ class TreeDepartment:
             if self.de.id == id:
                 return self.de.person_count
             if id < self.de.id:
-                return self.search_id(self.de.left)
-            return self.search_id(self.de.right)
+                return self.search_person_count_by_id(self.de.left)
+            return self.search_person_count_by_id(self.de.right)
         return None
 
     def search_smaller_person_count(self, id: int):
