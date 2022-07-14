@@ -16,6 +16,8 @@ Viết hàm tìm danh sách department có person_count nhỏ hơn department tr
 input: department_id
 output: List[Department]'''
 
+from collections.abc import Iterator
+
 
 class Department:
     def __init__(self, id: int, name: str, person_count: int):
@@ -28,8 +30,9 @@ class Department:
 
 
 class Node:
-    def __init__(self, data: Department):
+    def __init__(self, data: Department, parent):
         self.data = data
+        self.parent = parent
         self.left = None
         self.right = None
 
@@ -41,76 +44,83 @@ class TreeDepartment:
     def __init__(self):
         self.root = None
 
-    def insert_department(self, current: Node, insert_node: Department) -> bool:
-        if current:
-            if current.data.id == insert_node.id:
-                return False
-            if current.data.id > insert_node.id:
-                return self.insert_department(current.left, insert_node)
+    def insert_department(self, insert_node: Department) -> None:
+        self.root = self._insert_department(self.root, insert_node)
+
+    def _insert_department(self, current: Node, _insert_node: Department, parent: Node = None) -> Node:
+        if current is None:
+            current = Node(_insert_node, parent)
+        else:
+            if current.data.id > _insert_node.id:
+                current.left = self._insert_department(current.left, _insert_node, current)
+            elif current.data.id < _insert_node.id:
+                current.right = self._insert_department(current.right, _insert_node, current)
             else:
-                return self.insert_department(current.right, insert_node)
-        current = Node(insert_node)
-        self.root = current
-        return True
+                raise Exception(f"Node with insert node {_insert_node} already exists")
+                # TH: current.data.id == _insert_node.id:
+        # current = Node(_insert_node)
+        return current
 
-    def print_tree(self) -> str:
-        if self.root == None:
-            return False
-        if self.root:
-            print(self.root.data)
-        if self.root.left:
-            self.root.left.print_tree()
-        if self.root.right:
-            self.root.right.print_tree()
+    def search_id(self, id) -> Node:
+        return self._search_id(self.root, id)
 
-    def search_id(self, current_node: Node, id: int):
-        if current_node:
-            if current_node.data.id == id:
-                return current_node.data.id
+    def _search_id(self, current_node: Node, id: int) -> Node:
+        if current_node is None:
+            raise Exception(f"Node with id {id} does not exist")
+        else:
             if current_node.data.id > id:
-                return self.search_id(current_node.left, id)
-            else:
-                return self.search_id(current_node.right, id)
-        return None
+                current_node = self._search_id(current_node.left, id)
+            elif current_node.data.id < id:
+                current_node = self._search_id(current_node.right, id)
+        return current_node
 
-    def search_person_count_by_id(self, id: int):
-        if self.root:
-            print(self.root.person_count)
-            return self.root.person_count
-        if self.root.left:
-            self.root.left.print_tree()
-        if self.root.right:
-            self.root.right.print_tree()
+    def _print_tree(self, node: Node):
+        if node:
+            self._print_tree(node.left)
+            print(node.data)
+            self._print_tree(node.right)
 
-    def search_smaller_person_count(self, id: int):
-        if id == None:
-            raise Exception("invalid input")
-        if self.root:
-            print(self.root.person_count)
-            if self.root and self.root.person_count < self.search_person_count_by_id(id):
-                return self.root.id
-            if self.root.left and self.root.left.person_count < self.search_person_count_by_id(id):
-                print(self.root.left.person_count)
-                return self.search_smaller_person_count(self.root.left.id)
-            if self.root.right and self.root.right.person_count > self.search_person_count_by_id(id):
-                print(self.root.right.person_count)
-                return self.search_smaller_person_count(self.root.right.id)
+    def print_tree(self):
+        return self._print_tree(self.root)
 
+    def _smaller_tree(self, node: Node):
+        if node:
+            self._smaller_tree(node.left)
+            print(node.data)
+            self._smaller_tree(node.right)
+
+    def smaller_tree(self, id: int):
+        node = tree.search_id(id)
+        return self._smaller_tree(node)
+
+    def _person_count(self, node: Node, _list_person_count = []):
+        if node:
+            self._person_count(node.right, _list_person_count)
+            self._person_count(node.left, _list_person_count)
+            _list_person_count.append({"ID": node.data.id, "Person Count": node.data.person_count})
+            return _list_person_count
+
+    def smaller_person_count(self, id):
+        list_smaller_person_count = []
+        node = tree.search_id(self.root.data.id)
+        pivot = tree.search_id(id).data.person_count
+        list_person_count = self._person_count(node)
+        for item in list_person_count:
+            if item["Person Count"] > pivot:
+                list_smaller_person_count.append(item)
+        return list_smaller_person_count
 
 if __name__ == '__main__':
     tree = TreeDepartment()
-    current = Node(Department(1, "A", 75000))
-    insert_node = Department(3, "C", 45000)
-    tree.insert_department(current, insert_node)
+    tree.insert_department(Department(3, "A", 75000))
+    tree.insert_department(Department(2, "D", 50500))
+    tree.insert_department(Department(4, "E", 60000))
+    tree.insert_department(Department(1, "F", 69000))
+    tree.insert_department(Department(5, "G", 87000))
     # tree.print_tree()
-    # insert_node = Department(2, "B", 45550)
-    # tree.insert_department(current, insert_node)
-    # tree.print_tree()
-    # insert_node = Department(4, "D", 99500)
-    # tree.insert_department(current, insert_node)
-    # tree.print_tree()
-    # tree.search_id(tree.root, 3)
-    # tree.print_tree()
-    # current.print_tree()
-    # tree.search_id(current, 1)
-    # tree.search_id(current, 2)
+    # tree.search_id(2)
+    # t = tree.smaller_tree(4)
+    # print(t)
+    print(tree.smaller_person_count(4))
+
+
