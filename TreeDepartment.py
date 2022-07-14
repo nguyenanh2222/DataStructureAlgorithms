@@ -28,77 +28,87 @@ class Department:
     def __str__(self):
         return f"{self.id}-{self.name}-{self.person_count}"
 
+    def search_id(self, id: int):
+        if self.id == id:
+            return self.id
+        if id < self.id:
+            return self.search_id(self.left)
+        return self.search_id(self.right)
+
 
 class TreeDepartment:
     def __init__(self):
         self.root = None
 
-    def print_tree(self):
-        # print(type(self.root))
-        if self.root.left:
-            self.root.left.print_tree()
-        print(self.root)
-        if self.root.right:
-            self.root.right.print_tree()
+    def print_tree(self, node: Department = None):
+        if not node:
+            node = self.root
+        print(node)
+        if node.left:
+            self.print_tree(node.left)
+        if node.right:
+            self.print_tree(node.right)
 
-    def search_id(self, id: int):
-        if self.root:
-            # print((self.root.id))
-            if self.root.id == id:
-                return self.root.id
-            if id < self.root.id:
-                # print('trai')
-                return self.search_id(self.root.left)
-            # print('phai')
-            return self.search_id(self.root.right)
-        return None
-
-    def insert_department(self, p: Department, id: int, name: str, person_count: int):
+    def insert_department(self, id: int, name: str, person_count: int, p: Department = None):
         if id == None:
             raise Exception("invalid input")
-        if self.search_id(id):
-            raise Exception("invalid input")
-        if not self.root:
-            self.root = Department(id=id, name=name, person_count=person_count)
-            return p
-        else:
-            if p.id > id:
-                return self.insert_department(p.left, id, name, person_count)
-            if p.id < id:
-                return self.insert_department(p.right, id, name, person_count)
-            p = Department(id=id, name=name, person_count=person_count)
-            return p
+        if not p:
+            if not self.root:
+                self.root = Department(id=id, name=name, person_count=person_count)
+                return
+            p = self.root
+        if p.right.id > id:
+            if not p.left:
+                p.left = Department(id=id, name=name, person_count=person_count)
+                return
+            return self.insert_department(id, name, person_count, p.left)
+        if p.id < id:
+            if not p.right:
+                p.right = Department(id=id, name=name, person_count=person_count)
+                return
+            return self.insert_department(id, name, person_count, p.right)
+
 
     def search_person_count_by_id(self, id: int):
         if self.root:
-            if self.root.id == id:
-                return self.root.person_count
-            if id < self.root.id:
-                return self.search_person_count_by_id(self.root.left)
-            return self.search_person_count_by_id(self.root.right)
-        return None
+            print(self.root.person_count)
+            return self.root.person_count
+        if self.root.left:
+            self.print_tree(self.root.left.id)
+        if self.root.right:
+            self.print_tree(self.root.right.id)
+
 
     def search_smaller_person_count(self, id: int):
-        p: Department
-        list_department = []
-        if self.search_id(id) is None:
-            return f"department {id} not found"
-        else:
-            if p.person_count < self.search_person_count_by_id(id):
-                list_department.append([p.id, p.name, p.person_count])
-                return list_department
+        if id == None:
+            raise Exception("invalid input")
+        print(self.root.person_count)
+        if self.root and self.root.person_count < self.search_person_count_by_id(id):
+                return self.root.id
+        if self.root.left and self.root.left.person_count < self.search_person_count_by_id(id):
+            print(self.root.left.person_count)
+            return self.search_smaller_person_count(self.root.left.id)
+        if self.root.right and self.root.right.person_count > self.search_person_count_by_id(id):
+            print(self.root.right.person_count)
+            return self.search_smaller_person_count(self.root.right.id)
 
 
 if __name__ == '__main__':
-    p = Department(id=1, name="A", person_count=2500)
     tree = TreeDepartment()
     # tree = tree.search_id(1)
     # tree.search_id(1)
-    tree.insert_department(p, id=2, name="B", person_count=3000)
+    tree.insert_department(id=2, name="B", person_count=3000)
     tree.print_tree()
-    tree.insert_department(p, id=3, name="C", person_count=5100)
-    tree.insert_department(p, id=4, name="D", person_count=4050)
-    tree.insert_department(p, id=5, name="E", person_count=3600)
+    print("====")
+    tree.insert_department(id=3, name="C", person_count=5100)
     tree.print_tree()
+    print("====")
+    tree.insert_department(id=4, name="D", person_count=4050)
+    tree.print_tree()
+    print("====")
+    tree.insert_department(id=5, name="E", person_count=3600)
+    tree.print_tree()
+    print("====")
+    tree.search_smaller_person_count(3)
     # p = Department(id=2, name="B", person_count=2500)
     # tree = tree.insert(p)
