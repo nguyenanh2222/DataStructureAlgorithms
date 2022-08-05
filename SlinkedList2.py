@@ -1,58 +1,67 @@
-class Node():
-    def __init__(self):
-        self.info = Node
+class Node:
+    def __init__(self, info: int):
+        self.info = info
         self.next = None
 
     def __str__(self):
-        return str(self.info)
+        return self.info
 
 
-class SLinkedList():
-    def __init__(self, plist: Node):
-        self.plist = plist
+class SLinkedList:
+    def __init__(self):
+        self.plist = None
 
     def __str__(self):
-        str_temp = ''
         temp = self.plist
-        while temp != None:
-            str_temp += f"{temp}-->"
+        temp_str = ""
+        while temp:
+            temp_str += f"{temp.info}-->"
             temp = temp.next
-        str_temp += "None"
-        return str_temp
+        temp_str += "None"
+        return temp_str
 
-    def push(self, x):
-        p = Node
-        p.info = x
-        p.next = self.plist
-        self.plist = p
+    def insert_head_node(self, x: Node):
+        p: Node
+        p = self.plist
+        x.next = p
+        self.plist = x
 
+    def insert_tail_node(self, x: Node):
+        p = self.plist
+        while p:
+            if p.next != None:
+                p = p.next
+            elif p.next == None:
+                p.next = x
+                x.next = None
+                break
 
-
-
-    def list_size(self):
+    def insert_pos_node(self, node: Node, pos):
         count = 0
         p = self.plist
-        while p != None:
+        if p == None:
+            return False
+        while p:
+            if count == pos-1:
+                node.next = p.next
+                p.next = node
+                break
             count += 1
             p = p.next
-        return count
+
+    def delete_after(self, pre_node: Node):
+        if
 
 
 
 if __name__ == "__main__":
-    s_linked_list = SLinkedList(Node(info=3))
-    print(s_linked_list.push(Node(info=4)))
-    print(s_linked_list)
-    print(s_linked_list.push(Node(info=5)))
-    print(s_linked_list)
-    print(s_linked_list.push(Node(info=6)))
-    print(s_linked_list)
-
-
-
-
-
-
-
-
-
+    ll = SLinkedList()
+    ll.insert_head_node(Node(5))
+    ll.insert_head_node(Node(6))
+    ll.insert_head_node(Node(7))
+    ll.insert_tail_node(Node(3))
+    ll.insert_tail_node(Node(9))
+    ll.insert_tail_node(Node(5))
+    print(ll)
+    ll.insert_pos_node(Node(1), 2)
+    print(ll)
