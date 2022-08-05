@@ -1,28 +1,28 @@
-from random import randrange
-
-arr = []
-
-
 class RecursionArray:
-    def input_s_array(self, arr: [], n: int):
-        if n <= 0:
+    """doc stack: ngan xep, queue: hang doi"""
+
+    def print_1(self, n):
+        if n == 0:
             return
-        i = self.input_array(arr, n)
-        print(f"Input arr {i}: ", n)
+        print("So n: ", n)
+        self.print_1(n - 1)
 
+    def print_2(self, n):
+        if n == 0:
+            return
+        self.print_2(n - 1)
+        print("So n: ", n)
 
-    def input_array(self, arr:[], n: int):
-        arr.append(n)
-        for i in range(1, len(arr)):
-            return self.input_array(arr, n)
+    def print_3(self, n):
+        for i in range(n):
+            if i % 2 != 0:
+                return
+            else:
+                self.print_3(n-1)
+
 
 
 
 if __name__ == "__main__":
-    arr = []
-    rec_a = RecursionArray()
-    n = randrange(1, 10)
-    rec_a.input_s_array(arr, n)
-    rec_a.input_s_array(arr, n)
-    rec_a.input_s_array(arr, n)
-    # print()
+    recursion_array = RecursionArray()
+    print(recursion_array.print_3(10))
