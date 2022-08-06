@@ -50,7 +50,7 @@ class SLinkedList:
             p = p.next
 
     def delete_after(self, pre_node: Node):
-        if
+        ...
 
 
 
