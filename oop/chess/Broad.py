@@ -49,8 +49,8 @@ class Broad:
                 },
             'player2':
                 {
-                    'rook_left': player1.rook_left,
-                    'rook_right': player1.rook_right
+                    'rook_left': player2.rook_left,
+                    'rook_right': player2.rook_right
                 }
         }
 
