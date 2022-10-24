@@ -36,7 +36,9 @@ class Broad:
 
     def print(self):
         for i in self.broad:
-            print(i)
+            for j in i:
+                print(j, end="\t")
+            print()
 
     def build(self) -> Dict:
         chesses = self.Rule().get_chess()
