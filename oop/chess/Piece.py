@@ -8,3 +8,6 @@ class Piece:
 
     def __str__(self):
         return f'{self.name} is stay in {self.pos}'
+
+    def get_position(self):
+        return self.pos

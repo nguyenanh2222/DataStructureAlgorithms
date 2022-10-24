@@ -1,27 +1,28 @@
-from oop.chess.Player import Player
+from typing import Dict
+
 from oop.chess.Rook import Rook
 
 
 class Broad:
     class Rule:
         position = {
-            'player1': {
-                'rook_left': Rook(0, 0),
-                'rook_right': Rook(0, 7),
-                # chi di thang, di nang trong ban co, khong di len quan minh
-
-            }
+            'black': {
+                'rook_left': Rook(0, 0, 'rock_black_left'),
+                'rook_right': Rook(0, 7, 'rock_black_white'),
+            },
+            'white': {
+                'rook_left': Rook(7, 0, 'rock_white_left'),
+                'rook_right': Rook(7, 7, 'rock_white_right'),
+            },
         }
-        # player1 = position['player1']
-        # for name_chess in player1:
-        #     chess_position = player1[name_chess]
-        #     for index in range(len(chess_position)):
-        #         print(f'{name_chess}_{index}')
+        def get_chess(self):
+            return self.position
 
     def __init__(self, n: int):
         self.n = n
         self.broad = [[0 for i in range(self.n)] for j in range(self.n)]
         self.start_game = {}
+        self.draw()
 
     def draw(self):
         size = self.n * self.n
@@ -37,24 +38,13 @@ class Broad:
         for i in self.broad:
             print(i)
 
-    def build(self):
-        player1 = Player(self, rook_left=Rook(0, 0), rook_right=Rook(0, 7))
-        player2 = Player(self, rook_left=Rook(7, 0), rook_right=Rook(7, 7))
+    def build(self) -> Dict:
+        chesses = self.Rule().get_chess()
+        for chess in chesses:
+            chess = chesses[chess]
+            for chess_position in chess:
+                data = chess[chess_position].get_position()
+                self.broad[data[1]][data[0]] = chess[chess_position]
+        print(self.print())
+        return chesses
 
-        self.start_game = {
-            'player1':
-                {
-                    'rook_left': player1.rook_left,
-                    'rook_right': player1.rook_right
-                },
-            'player2':
-                {
-                    'rook_left': player2.rook_left,
-                    'rook_right': player2.rook_right
-                }
-        }
-
-
-chess = Broad(8)
-chess.draw()
-chess.print()
