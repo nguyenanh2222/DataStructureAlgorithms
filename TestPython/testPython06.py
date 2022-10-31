@@ -69,16 +69,9 @@ class Solution(object):
                 "C": 100,
                 "D": 500,
                 "M": 1000}
-        chunk = []
-        for item in s:
-            for key in rule:
-                if item == key:
-                    chunk.append(rule[key])
-        for idx_i in range(0, len(chunk)-1):
-            if chunk[idx_i] >= chunk[idx_i + 1]:
-                continue
-            else:
-                chunk[idx_i] = chunk[idx_i] * -1
+        chunk = [rule[item] for item in s if item in rule]
+        for idx_i in range(0, len(chunk) - 1):
+            chunk[idx_i] = chunk[idx_i] if chunk[idx_i] >= chunk[idx_i + 1] else - chunk[idx_i]
         return sum(chunk)
 
 
