@@ -18,7 +18,7 @@ class Player:
         self.chesses = chesses
         print(self.name, self.chesses)
 
-    def move(self, piece: Piece, position: Tuple):
+    def move(self, piece: str, position: Tuple):
         is_active = self.game.move(piece, position)
         return piece
 

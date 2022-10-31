@@ -11,3 +11,9 @@ class Piece:
 
     def get_position(self):
         return self.pos
+
+    def valid_move(self, new_pos: (), name: str):
+        return {
+            "piece": name,
+            "new_pos": new_pos
+        }
