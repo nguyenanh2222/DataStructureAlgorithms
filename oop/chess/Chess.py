@@ -24,8 +24,8 @@ class ChessGame:
         self.player[BLACK].achive_chess(chesses[BLACK])
         self.player[WHITE].achive_chess(chesses[WHITE])
 
-    def move(self, piece: Piece, position: Tuple):
-        self.chess.move(Piece, position)
+    def move(self, name: str, position: Tuple):
+        self.chess.move(name, position)
 
 
     def show_borad(self):

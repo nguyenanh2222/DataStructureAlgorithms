@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Tuple
 
 from oop.chess.Rook import Rook
 
@@ -15,6 +15,7 @@ class Broad:
                 'rook_right': Rook(7, 7, 'rock_white_right'),
             },
         }
+
         def get_chess(self):
             return self.position
 
@@ -40,6 +41,12 @@ class Broad:
                 print(j, end="\t")
             print()
 
+    def move(self, name: str, position: Tuple):
+        ...
+
+    def valide_move(self, position: Tuple):
+        ...
+
     def build(self) -> Dict:
         chesses = self.Rule().get_chess()
         for chess in chesses:
@@ -49,4 +56,3 @@ class Broad:
                 self.broad[data[1]][data[0]] = chess[chess_position]
         print(self.print())
         return chesses
-

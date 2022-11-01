@@ -16,11 +16,12 @@ class Player:
 
     def achive_chess(self, chesses: Dict):
         self.chesses = chesses
-        print(self.name, self.chesses)
 
-    def move(self, piece: str, position: Tuple):
-        is_active = self.game.move(piece, position)
-        return piece
-
+    def move(self, name: str, position: Tuple):
+        # is_active = self.game.move(piece, position)
+        # return piece
+        status = self.chesses[name].valid_move(position)
+        if status :
+            self.game.move(name,position)
     def __str__(self):
         return self.name
