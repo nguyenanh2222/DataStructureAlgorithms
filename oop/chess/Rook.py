@@ -12,6 +12,20 @@ class Rook(Piece):
     def get_position(self):
         return super().get_position()
 
-    def valid_move(self, new_pos: (), name: str):
+    def vertical(self, y: int)-> tuple:
+        return (self.x, y)
 
-        return super().valid_move(new_pos, name)
+    def hozical(self, x: int)-> tuple:
+        return (x, self.y)
+    def valid_move(self, new_pos: ()) -> bool:
+        old_pos = self.pos
+        if new_pos[0] > 8 or new_pos[1] > 8:
+            return False
+        elif new_pos == old_pos:
+            return False
+        elif new_pos == self.vertical(new_pos[1]) or new_pos == self.hozical(new_pos[0]):
+            return True
+        else:
+            return False
+
+
