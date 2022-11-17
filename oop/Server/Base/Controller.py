@@ -1,9 +1,8 @@
 import socket
-from _ast import List
-from selectors import SelectorKey
 from threading import Thread
-from typing import Tuple, Union
-
+import logging
+import time
+import orjson
 from select import select
 
 from oop.Server.Base.selecter import DefaultSelector
@@ -14,11 +13,11 @@ class BaseSocket:
     def __init__(self):
         ...
 
-    def run(self):
+    def build(self):
         ...
 
 
-class Socket(BaseSocket, Thread):
+class Socket(BaseSocket):
 
     def __init__(self, server="127.0.0.1", port=6666):
         super().__init__()
@@ -28,34 +27,42 @@ class Socket(BaseSocket, Thread):
         self.socket.bind((self.server, self.port))
         self.socket.listen()
         self.con = {}
+        self.state = [False, False]
+        # self.accepct_service = None
 
-    def run(self):
+    def build(self):
+        logging.info(f"SERVER: {self.server}:{self.port}")
+        Thread(target=self.accepct).start()
         while True:
+            time.sleep(2)
+            print(".....")
 
-            x, y, z = select([self.socket], self.con, [])
+    def accepct(self):
+        self.state[0] = True
+        another_user = {}
+        while self.state[0]:
+            x, y, z = select([self.socket], another_user, [], 0.2)
             if x:
                 con, address = self.socket.accept()
-                self.con[con.fileno()] = con
-                print("connect")
-            elif y:
-                a = self.con[y[0]].recv(1024)
-                print(a)
-                if not a:
-                    print("ok")
-                    self.con.pop((y[0]))
-            print("con:  " ,  self.con)
-            # con, address = self.socket.accept()
-            # self.con.append(con)
-            # x, y, z = select([self.socket], self.con, [])
-            # print(x,y,z)
-            # x, y, z = select([self.socket], self.con, [])
-            # print(x,y,z)
-            # con.sendall("hello")
-            # x, y, z = select([self.socket], self.con, [])
-            # print(x, y, z)
+                another_user[con.fileno()] = con
+                logging.info(f"Client {con.fileno()}: connect")
+            if y:
+                mess = self.recv(another_user[y[0]])
+                logging.info(f"Client {y[0]} tell {mess}")
+                #Handle Login
+                                
 
-        # with con:
-        #     while True:
-        #         data = con.recv(1024)
-        #         if not data:
-        #             break
+                if not mess:
+                    logging.info(f"Client {y[0]} Disconnect")
+                    another_user.pop((y[0]))
+
+    def handle_event(self, y):
+        mess = self.con[y[0]].recv(1024)
+        logging.info(f"Client {y[0]} tell {mess}")
+        if not mess:
+            logging.info(f"Client {y[0]} Disconnect")
+            self.con.pop((y[0]))
+
+    def recv(self, client) -> orjson:
+        mess = client.recv(1024)
+        return orjson.loads(mess)
