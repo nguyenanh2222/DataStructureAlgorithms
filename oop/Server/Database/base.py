@@ -8,7 +8,7 @@ engine = create_engine("mysql+pymysql://sang:123@localhost:3306/social_media", p
 session_factory = sessionmaker(engine)
 
 
-def get_session(session = session_factory()) -> Session:
+def get_session() -> Session:
     """Provide a transactional scope around a series of operations."""
     session = session_factory()
     try:
@@ -20,12 +20,15 @@ def get_session(session = session_factory()) -> Session:
         session.commit()
         session.close()
 
+def auto_commit(session : Session):
+    print(session)
+    session.commit()
+    session.close()
+
 # @as_declarative(metadata=MetaData(schema="social_media"))
 @declarative_base
 class Base:
     __name__: str
-
-    
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

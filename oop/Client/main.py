@@ -10,7 +10,7 @@ PORT = 6666  # The port used by the server
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
     user_login = UserLogin(
-        username="123",
+        username="sang01",
         password="123")
 
     s.sendall(orjson.dumps(user_login.dict()))

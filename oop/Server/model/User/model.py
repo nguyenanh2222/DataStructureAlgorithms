@@ -1,27 +1,33 @@
+from datetime import datetime
+
 from pydantic import BaseModel, Field
 
 
-class UserLogin(BaseModel):
+class TemplateLogin(BaseModel):
     username: str = Field(None)
     password: str = Field(None)
 
 
-class User(BaseModel):
-    id = Field(None)
-    uuid = Field(None)
-    first_name = Field(None)
-    middle_name = Field(None)
-    last_name = Field(None)
-    username = Field(...)
-    password_hash = Field(None)
-    password = Field(...)
-    mobile = Field(None)
-    email = Field(None)
-    registered_at = Field(None)
-    last_login = Field(None)
-    intro = Field(None)
-    profile = Field(None)
-    is_active = Field(None)
-    is_reported = Field(None)
-    is_blocked = Field(None)
+class UserReq(BaseModel):
+    id: str = Field(None)
+    uuid: str = Field(None)
+    first_name: str = Field(None)
+    middle_name: str = Field(None)
+    last_name: str = Field(None)
+    mobile: str = Field(None)
+    email: str = Field(None)
+    username: str = Field(None)
+    registered_at: datetime = Field(None)
+    last_login: datetime = Field(None)
+    intro: str = Field(None)
+    profile: str = Field(None)
+    is_active: str = Field(None)
+    is_reported: str = Field(None)
+    is_blocked: str = Field(None)
+    action: str = Field("login")
+    status: bool = Field(True)
 
+
+class AnonymusReq(BaseModel):
+    action: str = Field("login")
+    status: bool = Field(False)
