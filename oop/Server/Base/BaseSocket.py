@@ -73,8 +73,6 @@ class Socket(BaseSocket):
                         self.send(another_user[client],user.dict())
 
 
-
-
     def handle_event(self, y):
         mess = self.con[y[0]].recv(1024)
         logging.info(f"Client {y[0]} tell {mess}")
